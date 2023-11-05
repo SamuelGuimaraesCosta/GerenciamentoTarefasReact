@@ -21,7 +21,7 @@ const HeaderPrincipal = () => {
 
   return (
     <div>
-      <Header bgColor={headerBackgroundColor}>
+      <Header $bgcolor={headerBackgroundColor}>
         <HeaderContent>
           <Logo src='task-logo.png'></Logo>
           <HeaderTitle>
@@ -29,7 +29,7 @@ const HeaderPrincipal = () => {
           </HeaderTitle>
         </HeaderContent>
         <Navbar>
-          <TaskCounter bgColor={headerBackgroundColor}>Tarefas Pendentes: {taskCount}</TaskCounter>
+          <TaskCounter $bgcolor={headerBackgroundColor}>Tarefas Pendentes: {taskCount}</TaskCounter>
           <NewTaskButton onClick={addTask}>Nova Tarefa</NewTaskButton>
         </Navbar>
       </Header>

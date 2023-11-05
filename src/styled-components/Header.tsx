@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 interface HeaderProps {
-  bgColor: string;
+  $bgcolor: string;
 }
 
 const Header = styled.header<HeaderProps>`
-  background-color: ${({ bgColor }) => bgColor};
+  background-color: ${({ $bgcolor }) => $bgcolor};
   color: #fff;
   padding: 20px;
   display: flex;
@@ -51,6 +51,7 @@ const Navbar = styled.nav`
   align-items: center;
 
   @media (max-width: 768px) {
+    padding-top: 10px;
     flex-direction: column;
     align-items: center;
   }
@@ -64,7 +65,7 @@ const TaskCounter = styled.div<HeaderProps>`
 
   @media (max-width: 768px) {
     margin: 10px 0;
-    color: ${({ bgColor }) => bgColor};
+    color: ${({ $bgcolor }) => $bgcolor};
   }
 
   @keyframes pulse {
@@ -97,8 +98,8 @@ const NewTaskButton = styled.button`
     background-color: #005bab;
   }
 
-  &:active { /* Estilize a animação quando o botão estiver ativo (clicado) */
-    transform: scale(0.95); /* Reduza o tamanho em 5% quando clicado */
+  &:active {
+    transform: scale(0.95);
   }
 
   @media (max-width: 768px) {
