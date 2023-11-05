@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 interface HeaderProps {
   $bgcolor: string;
@@ -19,13 +19,34 @@ const Header = styled.header<HeaderProps>`
   }
 `;
 
+const skewAnimation = keyframes`
+  0% {
+    transform: skew(0);
+  }
+  25% {
+    transform: skew(10deg);
+  }
+  0% {
+    transform: skew(0);
+  }
+  75% {
+    transform: skew(-10deg);
+  }
+  100% {
+    transform: skew(0);
+  }
+`;
+
 const Logo = styled.img`
   max-width: 100px;
   margin-right: 20px;
+  
   @media (max-width: 768px) {
     margin-right: 0;
     margin-bottom: 10px;
   }
+
+  animation: ${skewAnimation} 1.5s infinite;
 `;
 
 const HeaderContent = styled.div`
@@ -85,17 +106,18 @@ const TaskCounter = styled.div<HeaderProps>`
 `;
 
 const NewTaskButton = styled.button`
-  background-color: #0074e4;
-  color: #fff;
+  background-color: #EEFC1A;
+  color: #000;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: background-color 0.2s;
+  font-weight: bolder;
   
   &:hover {
-    background-color: #005bab;
+    background-color: #BFCA12;
   }
 
   &:active {

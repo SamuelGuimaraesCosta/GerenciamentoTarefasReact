@@ -1,21 +1,20 @@
 import { Header, HeaderContent, HeaderTitle, Logo, Navbar, TaskCounter, NewTaskButton } from '../styled-components/Header';
 import { useState, useEffect } from 'react';
 
-const HeaderPrincipal = () => {
-  const [taskCount, setTaskCount] = useState(0);
-  const [headerBackgroundColor, setHeaderBackgroundColor] = useState('blue');
+interface HeaderPrincipalProps {
+  taskCount: number;
+}
 
-  const addTask = () => {
-    setTaskCount(taskCount + 1);
-  };
+const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ taskCount }) => {
+  const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#469AF8');
 
   useEffect(() => {
     if (taskCount >= 1 && taskCount <= 3) {
-      setHeaderBackgroundColor('green');
+      setHeaderBackgroundColor('#AFE1AF');
     } else if (taskCount >= 10) {
-      setHeaderBackgroundColor('red');
+      setHeaderBackgroundColor('#C70039');
     } else {
-      setHeaderBackgroundColor('blue');
+      setHeaderBackgroundColor('#469AF8');
     }
   }, [taskCount]);
 
@@ -30,7 +29,7 @@ const HeaderPrincipal = () => {
         </HeaderContent>
         <Navbar>
           <TaskCounter $bgcolor={headerBackgroundColor}>Tarefas Pendentes: {taskCount}</TaskCounter>
-          <NewTaskButton onClick={addTask}>Nova Tarefa</NewTaskButton>
+          <NewTaskButton>Nova Tarefa</NewTaskButton>
         </Navbar>
       </Header>
     </div>
