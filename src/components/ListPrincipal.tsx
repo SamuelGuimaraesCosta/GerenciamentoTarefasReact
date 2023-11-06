@@ -1,21 +1,22 @@
-import { useEffect, useState } from 'react';
-import { Checkbox, TaskItem, TaskList, Title, TaskTitle, TaskDate, EditButton, EditIcon, DeleteButton, DeleteIcon } from '../styled-components/List';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-import Alert from './AlertMessage';
-import ModalEdit from './ModalEdit';
+import { useEffect, useState } from 'react'; // Importa os hooks de efeito e estado do React
+import { Checkbox, TaskItem, TaskList, Title, TaskTitle, TaskDate, EditButton, EditIcon, DeleteButton, DeleteIcon } from '../styled-components/List'; // Importa componentes estilizados
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'; // Importa ícones do FontAwesome
+import axios from 'axios'; // Importa a biblioteca Axios para fazer solicitações HTTP
+import Alert from './AlertMessage'; // Importa o componente Alert para mensagens de erro/sucesso
+import ModalEdit from './ModalEdit'; // Importa o componente ModalEdit para edição de tarefas
 
 const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null); // Estado para armazenar mensagens de erro
 
-  const [success, setSuccess] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null); // Estado para armazenar mensagens de sucesso
 
-  const [updatedTasks, setUpdatedTasks] = useState<Array<any>>([]);
+  const [updatedTasks, setUpdatedTasks] = useState<Array<any>>([]); // Estado para armazenar as tarefas atualizadas
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar a abertura do modal
 
-  const [selectedTask, setSelectedTask] = useState<any | null>(null);
+  const [selectedTask, setSelectedTask] = useState<any | null>(null); // Estado para armazenar a tarefa selecionada
 
+  // Função para buscar tarefas do servidor
   const fetchTasksFromServer = async () => {
     try {
       const response = await axios.get('http://localhost:3001/tasks');
@@ -26,6 +27,7 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
     }
   };
 
+  // Efeito que carrega as tarefas do servidor quando a lista de tarefas muda
   useEffect(() => {
     fetchTasksFromServer().then((data) => {
       setUpdatedTasks(data);
@@ -34,6 +36,7 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
     });
   }, [tasks]);
 
+  // Função para formatar a data e hora no formato desejado
   const formatDateTime = (dateTimeString: string) => {
     const timeZone = 'America/Sao_Paulo';
     const zonedDate = new Date(dateTimeString);
@@ -44,6 +47,7 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
     return formattedDate;
   };
 
+  // Função para lidar com a mudança do estado de uma tarefa (concluída ou não)
   const handleCheckboxChange = (taskId: number) => {
     tasks = updatedTasks;
     tasks.map((task: any) => {
@@ -86,12 +90,14 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
     return;
   };
 
+  // Função para abrir o modal de edição de tarefa
   const openModal = (task: any) => {
     setSelectedTask(task);
 
     setIsModalOpen(true);
   };
 
+  // Função para lidar com o envio de dados do modal de edição
   const getSubmit = (data: any) => {
     if (data.description != null) {
       const actualDate = new Date();
@@ -112,6 +118,7 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
     }
   }
 
+  // Função para atualizar uma tarefa no servidor
   const updateTask = async (taskId: number, updatedTaskData: any) => {
     try {
       const response = await axios.put(`http://localhost:3001/tasks/${taskId}`, updatedTaskData);
@@ -136,6 +143,7 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
     }
   };
 
+  // Função para lidar com a exclusão de uma tarefa
   const handleDelete = (taskId: number) => {
     if (window.confirm("Tem certeza de que deseja excluir esta tarefa?")) {
       axios.delete(`http://localhost:3001/tasks/${taskId}`).then(() => {
@@ -192,4 +200,5 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
   );
 };
 
+// Exporta o componente ListPrincipal para uso em outras partes da aplicação
 export default ListPrincipal;

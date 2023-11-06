@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+// Cria um componente estilizado chamado ModalBackground para o fundo de um modal
 const ModalBackground = styled.div`
   position: fixed;
   top: 0;
@@ -12,6 +13,7 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 
+// Cria um componente estilizado chamado ModalContent para o conteúdo de um modal
 const ModalContent = styled.div`
   background: #fff;
   padding: 20px;
@@ -20,24 +22,28 @@ const ModalContent = styled.div`
   text-align: center;
 `;
 
+// Cria um componente estilizado chamado ModalTitle para o título de um modal
 const ModalTitle = styled.h1`
   font-size: 24px;
   margin: 0;
   margin-bottom: 20px;
 `;
 
+// Cria um componente estilizado chamado StyledForm para um formulário estilizado
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
 
+// Cria um componente estilizado chamado InputWrapper para um wrapper de entrada de dados
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
 `;
 
+// Cria um componente estilizado chamado Input para uma entrada de dados
 const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
@@ -50,16 +56,19 @@ const Input = styled.input`
   }
 `;
 
+// Cria um componente estilizado chamado ErrorMessage para exibir mensagens de erro
 const ErrorMessage = styled.span`
   color: #f44336;
   font-size: 14px;
 `;
 
+// Cria um componente estilizado chamado ButtonWrapper para um wrapper de botões
 const ButtonWrapper = styled.div`
   display: flex;
   gap: 10px;
 `;
 
+// Cria um componente estilizado chamado SubmitButton para um botão de envio
 const SubmitButton = styled.button`
   padding: 10px 20px;
   background-color: #007f00;
@@ -74,6 +83,7 @@ const SubmitButton = styled.button`
   }
 `;
 
+// Cria um componente estilizado chamado CancelButton para um botão de cancelamento
 const CancelButton = styled.button`
   padding: 10px 20px;
   background-color: #f44336;
@@ -88,6 +98,7 @@ const CancelButton = styled.button`
   }
 `;
 
+// Cria um componente estilizado chamado RandomDescriptionButton para um botão de descrição aleatória
 const RandomDescriptionButton = styled.button`
   padding: 10px 20px;
   background-color: #0072ff;
@@ -102,4 +113,5 @@ const RandomDescriptionButton = styled.button`
   }
 `;
 
+// Exporta os componentes estilizados para uso em outros lugares do aplicativo
 export { ModalBackground, ModalContent, ModalTitle, StyledForm, InputWrapper, Input, ErrorMessage, ButtonWrapper, SubmitButton, CancelButton, RandomDescriptionButton };

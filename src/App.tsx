@@ -1,7 +1,7 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from './pages/MainPage';
+import React from 'react'; // Importa a biblioteca React
+import './App.css'; // Importa estilos CSS a partir de um arquivo
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Importa componentes e funcionalidades de roteamento do React Router
+import MainPage from './pages/MainPage'; // Importa o componente da página principal
 
 function App() {
   return (
@@ -13,4 +13,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; // Exporta o componente App como o componente principal da aplicação

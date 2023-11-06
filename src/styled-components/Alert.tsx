@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
+// Define uma interface que descreve as propriedades aceitas pelo componente FloatingAlertContainer
 interface AlertProps {
   $visible: boolean;
   color: string;
 }
 
+// Cria um componente estilizado chamado FloatingAlertContainer, que é uma div com estilos condicionais com base nas props
 const FloatingAlertContainer = styled.div<AlertProps>`
   position: fixed;
   top: 10px;
@@ -17,6 +19,7 @@ const FloatingAlertContainer = styled.div<AlertProps>`
   display: ${({ $visible }) => ($visible ? 'block' : 'none')};
 `;
 
+// Cria um componente estilizado chamado CloseButton para o botão de fechar
 const CloseButton = styled.button`
   position: absolute;
   top: 1px;
@@ -28,4 +31,5 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
+// Exporta os componentes para uso em outros lugares do aplicativo
 export { FloatingAlertContainer, CloseButton };

@@ -2,10 +2,12 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
+// Define uma interface para as propriedades do componente TaskItem
 interface TaskItemProps {
   $completed: Boolean;
 }
 
+// Cria um componente estilizado chamado TaskList para a lista de tarefas
 const TaskList = styled.ul`
   list-style: none;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -34,6 +36,7 @@ const TaskList = styled.ul`
   }
 `;
 
+// Cria um componente estilizado chamado TaskItem para cada item de tarefa na lista
 const TaskItem = styled.li<TaskItemProps>`
   margin: 0;
   display: flex;
@@ -64,6 +67,7 @@ const TaskItem = styled.li<TaskItemProps>`
   }
 `;
 
+// Cria componentes estilizados para o título da lista, caixa de seleção, título da tarefa, data da tarefa e botões de edição/exclusão
 const Title = styled.h2`
   text-align: center;
   margin-top: 0;
@@ -108,7 +112,7 @@ const EditButton = styled.button`
 `;
 
 const EditIcon = styled(FontAwesomeIcon).attrs({
-  icon: faEdit,
+  icon: faEdit, // Ícone de edição
 })`
   font-size: 1.5rem;
   vertical-align: middle;
@@ -122,10 +126,11 @@ const DeleteButton = styled.button`
 `;
 
 const DeleteIcon = styled(FontAwesomeIcon).attrs({
-  icon: faTrashAlt,
+  icon: faTrashAlt, // Ícone de exclusão
 })`
   font-size: 1.5rem;
   vertical-align: middle;
 `;
 
+// Exporta os componentes estilizados para uso em outros lugares do aplicativo
 export { TaskList, TaskItem, Title, Checkbox, TaskTitle, TaskDate, EditButton, EditIcon, DeleteButton, DeleteIcon };

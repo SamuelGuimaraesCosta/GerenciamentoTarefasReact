@@ -1,33 +1,38 @@
-import { ButtonWrapper, CancelButton, ErrorMessage, Input, InputWrapper, ModalBackground, ModalContent, ModalTitle, RandomDescriptionButton, StyledForm, SubmitButton } from "../styled-components/Modal";
-import { Controller, useForm } from "react-hook-form";
-import axios from "axios";
-import { useEffect } from "react";
+import { ButtonWrapper, CancelButton, ErrorMessage, Input, InputWrapper, ModalBackground, ModalContent, ModalTitle, RandomDescriptionButton, StyledForm, SubmitButton } from "../styled-components/Modal"; // Importa componentes estilizados para criar o modal
+import { Controller, useForm } from "react-hook-form"; // Importa o React Hook Form para lidar com formulários no React
+import axios from "axios"; // Importa a biblioteca Axios para fazer solicitações HTTP
+import { useEffect } from "react"; // Importa o hook de efeito do React
 
 const ModalEdit = ({ isOpen, onClose, title, submit, task }: any) => {
-  const { control, handleSubmit, formState: { errors }, setValue } = useForm();
+  const { control, handleSubmit, formState: { errors }, setValue } = useForm(); // Inicializa o React Hook Form para gerenciar o formulário
 
+  // Preenche o campo de descrição com o valor da tarefa passada como prop quando o modal é aberto
   useEffect(() => {
     if (task) {
       setValue('description', task.description);
     }
   }, [task, setValue]);
 
+  // Se o modal não estiver aberto, retorna null para não renderizar nada
   if (!isOpen) {
     return null;
   }
 
+  // Função para lidar com o envio do formulário
   const onSubmit = (data: any) => {
     submit(data);
 
     closeModal();
   };
 
+  // Função para fechar o modal
   const closeModal = () => {
     if (typeof onClose === "function") {
       onClose();
     }
   };
 
+  // Função para buscar uma descrição de atividade aleatória
   const fetchRandomActivityDescription = async () => {
     try {
       const response = await axios.get('https://www.boredapi.com/api/activity');
@@ -40,6 +45,7 @@ const ModalEdit = ({ isOpen, onClose, title, submit, task }: any) => {
     }
   };
 
+  // Função para gerar e preencher uma descrição aleatória no formulário
   const generateRandomDescription = async () => {
     const randomDescription = await fetchRandomActivityDescription();
 
@@ -82,4 +88,5 @@ const ModalEdit = ({ isOpen, onClose, title, submit, task }: any) => {
   );
 };
 
+// Exporta o componente ModalEdit para uso em outras partes da aplicação
 export default ModalEdit;

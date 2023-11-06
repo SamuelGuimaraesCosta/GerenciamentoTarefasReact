@@ -1,9 +1,11 @@
 import styled, { keyframes } from 'styled-components';
 
+// Define uma interface para as propriedades do componente Header
 interface HeaderProps {
   $bgcolor: string;
 }
 
+// Cria um componente estilizado chamado Header para o cabeçalho da página
 const Header = styled.header<HeaderProps>`
   background-color: ${({ $bgcolor }) => $bgcolor};
   color: #fff;
@@ -19,6 +21,7 @@ const Header = styled.header<HeaderProps>`
   }
 `;
 
+// Define uma animação de inclinação chamada skewAnimation usando keyframes
 const skewAnimation = keyframes`
   0% {
     transform: skew(0);
@@ -37,6 +40,7 @@ const skewAnimation = keyframes`
   }
 `;
 
+// Cria um componente estilizado chamado Logo para uma imagem do logotipo
 const Logo = styled.img`
   max-width: 100px;
   margin-right: 20px;
@@ -49,6 +53,7 @@ const Logo = styled.img`
   animation: ${skewAnimation} 1.5s infinite;
 `;
 
+// Cria componentes estilizados para o conteúdo do cabeçalho
 const HeaderContent = styled.div`
   display: flex;
   align-items: center;
@@ -67,6 +72,7 @@ const HeaderSubtitle = styled.p`
   }
 `;
 
+// Cria um componente estilizado chamado Navbar para a barra de navegação
 const Navbar = styled.nav`
   display: flex;
   align-items: center;
@@ -78,6 +84,7 @@ const Navbar = styled.nav`
   }
 `;
 
+// Cria um componente estilizado chamado TaskCounter para contar tarefas
 const TaskCounter = styled.div<HeaderProps>`
   margin-right: 20px;
   font-weight: bold;
@@ -105,6 +112,7 @@ const TaskCounter = styled.div<HeaderProps>`
   }
 `;
 
+// Cria um componente estilizado chamado NewTaskButton para um botão de nova tarefa
 const NewTaskButton = styled.button`
   background-color: #EEFC1A;
   color: #000;
@@ -129,4 +137,5 @@ const NewTaskButton = styled.button`
   }
 `;
 
+// Exporta os componentes estilizados para uso em outros lugares do aplicativo
 export { Header, Logo, HeaderTitle, HeaderSubtitle, Navbar, HeaderContent, TaskCounter, NewTaskButton };

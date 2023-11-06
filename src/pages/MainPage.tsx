@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import HeaderPrincipal from '../components/HeaderPrincipal';
-import ListPrincipal from '../components/ListPrincipal';
-import axios from 'axios';
-import Alert from '../components/AlertMessage';
+import React, { useEffect, useState } from 'react'; // Importa a biblioteca React e hooks (useEffect, useState)
+import HeaderPrincipal from '../components/HeaderPrincipal'; // Importa o componente de cabeçalho principal
+import ListPrincipal from '../components/ListPrincipal'; // Importa o componente de lista principal
+import axios from 'axios'; // Importa a biblioteca Axios para fazer solicitações HTTP
+import Alert from '../components/AlertMessage'; // Importa o componente de mensagem de alerta
 
 function HomePage() {
-  const [taskCount, setTaskCount] = useState(0);
+  const [taskCount, setTaskCount] = useState(0);  // Declara um estado para armazenar o contador de tarefas
 
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null); // Declara um estado para armazenar mensagens de erro
 
+  // Função assíncrona para atualizar o contador de tarefas pendentes
   const updateTaskCount = async () => {
     try {
       const response = await axios.get('http://localhost:3001/tasks?completed=false');
@@ -19,6 +20,7 @@ function HomePage() {
     }
   };
 
+  // Função assíncrona para buscar tarefas do servidor
   const fetchTasksFromServer = async () => {
     try {
       const response = await axios.get('http://localhost:3001/tasks');
@@ -29,6 +31,7 @@ function HomePage() {
     }
   };
 
+  // Função para buscar dados das tarefas do servidor
   const getData = () => {
     fetchTasksFromServer().then((result: any) => {
       updateTaskCount();
@@ -37,6 +40,7 @@ function HomePage() {
     });
   }
 
+  // Efeito que é executado uma vez (apenas no carregamento inicial)
   useEffect(() => {
     updateTaskCount();
   }, []);
@@ -54,4 +58,5 @@ function HomePage() {
   );
 }
 
+// Exporta o componente HomePage como o componente principal da página
 export default HomePage;
