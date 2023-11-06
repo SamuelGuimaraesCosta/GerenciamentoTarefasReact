@@ -14,7 +14,7 @@ const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ taskCount, loadAllDat
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (taskCount >= 1 && taskCount <= 3) {
+    if (taskCount >= 0 && taskCount <= 3) {
       setHeaderBackgroundColor('#AFE1AF');
     } else if (taskCount >= 10) {
       setHeaderBackgroundColor('#C70039');
