@@ -2,16 +2,20 @@ import { useEffect, useState } from 'react';
 import { Checkbox, TaskItem, TaskList, Title, TaskTitle, TaskDate, EditButton, EditIcon } from '../styled-components/List';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import Alert from './AlertMessage';
 
 const ListPrincipal = ({ updateTaskCount }: any) => {
   const [tasks, setTasks]: Array<any> = useState([]);
+
+  const [error, setError] = useState<string | null>(null);
+
+  const [success, setSuccess] = useState<string | null>(null);
 
   const fetchTasksFromServer = async () => {
     try {
       const response = await axios.get('http://localhost:3001/tasks');
       return response.data;
     } catch (error) {
-      console.error('Erro ao buscar tarefas:', error);
       throw error;
     }
   };
@@ -19,8 +23,8 @@ const ListPrincipal = ({ updateTaskCount }: any) => {
   const loadAllData = () => {
     fetchTasksFromServer().then((data) => {
       setTasks(data);
-    }).catch((error) => {
-      // Lide com o erro, se necessário
+    }).catch((error: any) => {
+      setError(`Erro ao carregar Tarefas: ${error.message}`);
     });
     return;
   }
@@ -28,8 +32,8 @@ const ListPrincipal = ({ updateTaskCount }: any) => {
   useEffect(() => {
     fetchTasksFromServer().then((data) => {
       setTasks(data);
-    }).catch((error) => {
-      // Lide com o erro, se necessário
+    }).catch((error: any) => {
+      setError(`Erro ao carregar Tarefas: ${error.message}`);
     });
     return;
   }, []);
@@ -60,15 +64,21 @@ const ListPrincipal = ({ updateTaskCount }: any) => {
 
         updatedTask.lastModifiedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
 
-        axios.put(`http://localhost:3001/tasks/${taskId}`, updatedTask).then((response) => {
-          console.log('Tarefa atualizada com sucesso:', response.data);
-
+        axios.put(`http://localhost:3001/tasks/${taskId}`, updatedTask).then(() => {
           setTimeout(() => {
             loadAllData();
             updateTaskCount();
+
+            if (updatedTask.completed) {
+              setSuccess('Parabéns! Sua tarefa foi concluída com sucesso!');
+            }
+
+            setTimeout(() => {
+              setSuccess(null);
+            }, 1000);
           }, 100);
-        }).catch((error) => {
-          console.error('Erro ao atualizar tarefa:', error);
+        }).catch((error: any) => {
+          setError(`Erro ao carregar Tarefas: ${error.message}`);
         });
 
         return updatedTask;
@@ -81,6 +91,10 @@ const ListPrincipal = ({ updateTaskCount }: any) => {
 
   return (
     <div>
+      {error && <Alert message={error} $visible={error !== null ? true : false} color="#f44336" />}
+
+      {success && <Alert message={success} $visible={success !== null ? true : false} color="#007f00" />}
+
       <TaskList>
         <Title>Lista de Tarefas</Title>
         {tasks.sort((a: any, b: any) => (a.completed === b.completed ? 0 : a.completed ? 1 : -1)).map((task: any) => (
