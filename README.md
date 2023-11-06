@@ -1,46 +1,123 @@
 # Aplicativo de Gerenciamento de Tarefas
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Visão Geral
 
-## Available Scripts
+O Aplicativo de Gerenciamento de Tarefas é uma aplicação web desenvolvida usando React com TypeScript. Ele fornece uma interface simples para gerenciar tarefas, permitindo que os usuários criem, editem, excluam e marquem tarefas como concluídas. O aplicativo utiliza várias bibliotecas e tecnologias para aprimorar sua funcionalidade.
 
-In the project directory, you can run:
+## Recursos
 
-### `npm start`
+* Listar e exibir tarefas pendentes.
+* Criar novas tarefas.
+* Editar tarefas existentes.
+* Marcar tarefas como concluídas.
+* Excluir tarefas.
+* Gerar descrições aleatórias de tarefas para novas tarefas.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Pré-Requisitos
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Antes de começar, certifique-se de que você tenha as seguintes dependências e configurações em vigor:
 
-### `npm test`
+* __Node.js__: O aplicativo depende do Node.js para funcionar. Se você ainda não instalou o Node.js, pode baixá-lo [aqui](https://nodejs.org/en).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* __json-server__: Este projeto utiliza o json-server como uma API simulada para a persistência de dados. Certifique-se de instalá-lo globalmente em seu sistema usando o seguinte comando:
 
-### `npm run build`
+```
+npm install -g json-server
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* __db.json__: Crie um arquivo db.json para servir como banco de dados simulado para armazenar tarefas. No projeto haverá uma pasta __json_server__ com este arquivo já criado:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+{
+  "tasks": []
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Instalação e Configuração
 
-### `npm run eject`
+Siga estas etapas para configurar o Aplicativo de Gerenciamento de Tarefas:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* __Clonar o Repositório__: Comece clonando o repositório Git para sua máquina local:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+git clone https://github.com/seu-repositorio.git
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* __Navegar até o Diretório do Projeto__: Altere o diretório atual para a pasta do projeto:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+cd gerenciamento-tarefas-react
+```
 
-## Learn More
+* __Instalar Dependências__: Use o npm para instalar as dependências do projeto:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* __Iniciar o JSON Server__: Inicie o servidor JSON para servir como a API simulada. Certifique-se de especificar o arquivo db.json e definir o servidor para ser executado na porta 3001 e também executar este comando na pasta json-server onde se localiza o db.json:
+
+```
+json-server --watch db.json --port 3001
+```
+
+* __Iniciar o Servidor de Desenvolvimento__: Após configurar o servidor JSON, inicie o servidor de desenvolvimento para o aplicativo React:
+
+```
+npm start
+```
+
+* __Acessar o Aplicativo__: Você pode acessar o aplicativo abrindo um navegador da web e navegando para http://localhost:3000.
+
+## Tecnologias Utilizadas
+
+O Aplicativo de Gerenciamento de Tarefas faz uso de várias tecnologias e bibliotecas, incluindo:
+
+* __React__: Uma biblioteca JavaScript para construir interfaces de usuário.
+
+* __TypeScript__: O TypeScript adiciona tipagem estática ao JavaScript, melhorando a qualidade do código e prevenindo erros.
+
+* __@fortawesome/free-solid-svg-icons e @fortawesome/react-fontawesome__: Essas bibliotecas fornecem acesso a ícones FontAwesome para aprimorar os elementos visuais do aplicativo.
+
+* __Axios__: O Axios é usado para fazer solicitações HTTP à API simulada para a manipulação de dados.
+
+* __Styled-components__: Esta biblioteca é usada para estilizar componentes com CSS-in-JS, simplificando a gestão de estilos.
+
+* __react-hook-form__: O react-hook-form é utilizado para simplificar a criação e validação de formulários.
+
+* __react-router-dom__: O react-router-dom é empregado para gerenciar as rotas e a navegação da aplicação.
+
+* __mdi/react__: O pacote de Ícones de Design de Material é usado para incluir ícones de Material Design em componentes específicos.
+
+## Estrutura do Projeto
+
+A estrutura do projeto é organizada em diferentes componentes e diretórios:
+
+* __src/components__: Este diretório contém todos os componentes da aplicação, incluindo o cabeçalho, a lista de tarefas, alertas e modais.
+
+* __src/pages__: As principais páginas do aplicativo são armazenadas neste diretório. A página principal combina o cabeçalho e a lista de tarefas.
+
+* __src/styled-components__: Os estilos dos componentes são gerenciados neste diretório usando a biblioteca styled-components.
+
+* __src/api__: As configurações da API e as solicitações para a API simulada são gerenciadas neste diretório.
+
+## Persistência de Dados
+
+A persistência de dados é alcançada por meio do pacote json-server, que serve como uma API simulada. Quando tarefas são criadas, editadas, marcadas como concluídas ou excluídas, a aplicação interage com esta API simulada. Os dados são armazenados e recuperados a partir do arquivo db.json. A API é executada na porta 3001.
+
+## Uso
+
+O Aplicativo de Gerenciamento de Tarefas oferece as seguintes funcionalidades principais:
+
+* Visualizar uma lista de tarefas pendentes.
+* Criar novas tarefas.
+* Editar tarefas existentes.
+* Marcar tarefas como concluídas.
+* Excluir tarefas.
+* Gerar descrições aleatórias de tarefas para novas tarefas.
+  
+## Conclusão
+
+Este projeto React TypeScript oferece uma solução de gerenciamento de tarefas abrangente com diversas funcionalidades. O uso do TypeScript adiciona tipagem estática à aplicação, aprimorando a qualidade do código. Ao aproveitar o json-server como API simulada, a persistência de dados é alcançada. Os usuários podem criar, atualizar e gerenciar tarefas com facilidade, tornando-o uma ferramenta valiosa para o gerenciamento de tarefas.
+
+Aproveite o uso do Aplicativo de Gerenciamento de Tarefas para um eficiente gerenciamento de tarefas!
