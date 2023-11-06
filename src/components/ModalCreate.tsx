@@ -24,9 +24,11 @@ const ModalCreate = ({ isOpen, onClose, title, submit }: any) => {
   const fetchRandomActivityDescription = async () => {
     try {
       const response = await axios.get('https://www.boredapi.com/api/activity');
+
       return response.data.activity;
     } catch (error) {
       console.error('Erro ao buscar atividade aleatória:', error);
+
       return null;
     }
   };

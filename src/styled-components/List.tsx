@@ -101,12 +101,6 @@ const TaskDate = styled.p`
   margin: 5px 0;
 `;
 
-const EditDeleteContainer = styled.div`
-  display: flex;
-  flex-direction: column; /* Coloca os botões um em cima do outro */
-  align-items: flex-end; /* Alinha os botões à direita */
-`;
-
 const EditButton = styled.button`
   background: none;
   border: none;

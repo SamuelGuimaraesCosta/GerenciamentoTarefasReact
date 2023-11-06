@@ -14,7 +14,7 @@ const FloatingAlertContainer = styled.div<AlertProps>`
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  display: ${({ $visible }) => ( $visible ? 'block' : 'none')};
+  display: ${({ $visible }) => ($visible ? 'block' : 'none')};
 `;
 
 const CloseButton = styled.button`

@@ -6,6 +6,7 @@ const Alert = ({ message, color }: any) => {
 
   const handleClose = () => {
     setIsVisible(false);
+
     message = null;
   };
 

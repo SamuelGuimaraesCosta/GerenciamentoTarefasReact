@@ -60,6 +60,7 @@ const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ taskCount, loadAllDat
       return response.data;
     } catch (error) {
       console.error('Erro ao criar tarefa:', error);
+
       throw error;
     }
   };

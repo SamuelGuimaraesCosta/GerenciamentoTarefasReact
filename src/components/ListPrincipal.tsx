@@ -19,6 +19,7 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
   const fetchTasksFromServer = async () => {
     try {
       const response = await axios.get('http://localhost:3001/tasks');
+      
       return response.data;
     } catch (error) {
       throw error;
@@ -35,11 +36,9 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
 
   const formatDateTime = (dateTimeString: string) => {
     const timeZone = 'America/Sao_Paulo';
-
     const zonedDate = new Date(dateTimeString);
     const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     const dayOfWeek = daysOfWeek[zonedDate.getDay()];
-
     const formattedDate = `${dayOfWeek}. ${zonedDate.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: timeZone })}`;
 
     return formattedDate;
@@ -91,8 +90,6 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
     setSelectedTask(task);
 
     setIsModalOpen(true);
-
-
   };
 
   const getSubmit = (data: any) => {

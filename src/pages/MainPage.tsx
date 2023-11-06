@@ -12,6 +12,7 @@ function HomePage() {
   const updateTaskCount = async () => {
     try {
       const response = await axios.get('http://localhost:3001/tasks?completed=false');
+      
       setTaskCount(response.data.length);
     } catch (error: any) {
       setError(`Erro ao carregar Contador de Tarefas Pendentes: ${error.message}`);
@@ -21,6 +22,7 @@ function HomePage() {
   const fetchTasksFromServer = async () => {
     try {
       const response = await axios.get('http://localhost:3001/tasks');
+
       return response.data;
     } catch (error: any) {
       setError(`Erro ao carregar Tarefas: ${error.message}`);
