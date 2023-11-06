@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Checkbox, TaskItem, TaskList, Title, TaskTitle, TaskDate, EditButton, EditIcon } from '../styled-components/List';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { Checkbox, TaskItem, TaskList, Title, TaskTitle, TaskDate, EditButton, EditIcon, DeleteButton, DeleteIcon } from '../styled-components/List';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import Alert from './AlertMessage';
+import ModalEdit from './ModalEdit';
 
 const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
   const [error, setError] = useState<string | null>(null);
@@ -10,6 +11,10 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
   const [success, setSuccess] = useState<string | null>(null);
 
   const [updatedTasks, setUpdatedTasks] = useState<Array<any>>([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [selectedTask, setSelectedTask] = useState<any | null>(null);
 
   const fetchTasksFromServer = async () => {
     try {
@@ -82,6 +87,78 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
     return;
   };
 
+  const openModal = (task: any) => {
+    setSelectedTask(task);
+
+    setIsModalOpen(true);
+
+
+  };
+
+  const getSubmit = (data: any) => {
+    if (data.description != null) {
+      const actualDate = new Date();
+      const year = actualDate.getFullYear();
+      const month = String(actualDate.getMonth() + 1).padStart(2, '0');
+      const day = String(actualDate.getDate()).padStart(2, '0');
+      const hours = String(actualDate.getHours()).padStart(2, '0');
+      const minutes = String(actualDate.getMinutes()).padStart(2, '0');
+
+      let taskData = {
+        description: data.description,
+        completed: false,
+        creationDate: selectedTask.creationDate,
+        lastModifiedDate: `${year}-${month}-${day} ${hours}:${minutes}`
+      }
+
+      updateTask(selectedTask.id, taskData);
+    }
+  }
+
+  const updateTask = async (taskId: number, updatedTaskData: any) => {
+    try {
+      const response = await axios.put(`http://localhost:3001/tasks/${taskId}`, updatedTaskData);
+
+      loadAllData().then((result: any) => {
+        setUpdatedTasks(result);
+
+        updateTaskCount();
+
+        setSuccess('Sua tarefa foi editada com sucesso!');
+
+        setTimeout(() => {
+          setSuccess(null);
+        }, 1000);
+      });
+
+      return response.data;
+    } catch (error: any) {
+      setError(`Erro ao editar Tarefa: ${error.message}`);
+
+      throw error;
+    }
+  };
+
+  const handleDelete = (taskId: number) => {
+    if (window.confirm("Tem certeza de que deseja excluir esta tarefa?")) {
+      axios.delete(`http://localhost:3001/tasks/${taskId}`).then(() => {
+        loadAllData().then((result: any) => {
+          setUpdatedTasks(result);
+
+          updateTaskCount();
+
+          setSuccess('Tarefa excluída com sucesso!');
+
+          setTimeout(() => {
+            setSuccess(null);
+          }, 1000);
+        });
+      }).catch((error: any) => {
+        setError(`Erro ao excluir Tarefa: ${error.message}`);
+      });
+    }
+  };
+
   return (
     <div>
       {error && <Alert message={error} $visible={error !== null ? true : false} color="#f44336" />}
@@ -99,13 +176,21 @@ const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
               <TaskDate>Última modificação em: {formatDateTime(task.lastModifiedDate)}</TaskDate>
             </div>
             <div>
-              <EditButton onClick={() => console.log(task.id)}>
+              <EditButton onClick={() => openModal(task)}>
                 <EditIcon icon={faEdit} />
               </EditButton>
+              <DeleteButton onClick={() => handleDelete(task.id)}>
+                <DeleteIcon icon={faTrashAlt} />
+              </DeleteButton>
             </div>
           </TaskItem>
         ))}
       </TaskList>
+
+      {isModalOpen && (
+        <ModalEdit isOpen={isModalOpen} onClose={() => { setSelectedTask(null); setIsModalOpen(false); }} title="Editar Tarefa" submit={getSubmit} task={selectedTask}>
+        </ModalEdit>
+      )}
     </div>
   );
 };

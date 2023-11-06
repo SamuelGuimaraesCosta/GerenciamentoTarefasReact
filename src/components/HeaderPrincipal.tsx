@@ -55,7 +55,7 @@ const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ taskCount, loadAllDat
     try {
       const response = await axios.post('http://localhost:3001/tasks', taskData);
 
-    loadAllData();
+      loadAllData();
 
       return response.data;
     } catch (error) {

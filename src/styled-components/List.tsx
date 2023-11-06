@@ -1,4 +1,4 @@
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
@@ -38,11 +38,10 @@ const TaskItem = styled.li<TaskItemProps>`
   margin: 0;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   border: 1px solid #ddd;
   padding: 10px;
   font-weight: bold;
-
   background-color: ${(props) => (props.$completed ? '#AFE1AF' : 'transparent')};
 
   &:first-of-type {
@@ -53,6 +52,15 @@ const TaskItem = styled.li<TaskItemProps>`
   &:last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    & > * {
+      margin-bottom: 10px;
+    }
   }
 `;
 
@@ -76,9 +84,16 @@ const Checkbox = styled.input`
 `;
 
 const TaskTitle = styled.h3<TaskItemProps>`
-  flex: 0.6;
+  flex: 1;
   margin: 0;
   text-decoration: ${(props) => (props.$completed ? 'line-through' : 'none')};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    max-width: 80%; /* Define um limite para o texto */
+  }
 `;
 
 const TaskDate = styled.p`
@@ -86,9 +101,13 @@ const TaskDate = styled.p`
   margin: 5px 0;
 `;
 
+const EditDeleteContainer = styled.div`
+  display: flex;
+  flex-direction: column; /* Coloca os botões um em cima do outro */
+  align-items: flex-end; /* Alinha os botões à direita */
+`;
+
 const EditButton = styled.button`
-  align: right;
-  padding-left: 20px;
   background: none;
   border: none;
   cursor: pointer;
@@ -97,8 +116,22 @@ const EditButton = styled.button`
 const EditIcon = styled(FontAwesomeIcon).attrs({
   icon: faEdit,
 })`
-  color: #000; /* Cor desejada para o ícone */
-  font-size: 16px; /* Tamanho desejado para o ícone */
+  font-size: 1.5rem;
+  vertical-align: middle;
 `;
 
-export { TaskList, TaskItem, Title, Checkbox, TaskTitle, TaskDate, EditButton, EditIcon };
+const DeleteButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: red;
+`;
+
+const DeleteIcon = styled(FontAwesomeIcon).attrs({
+  icon: faTrashAlt,
+})`
+  font-size: 1.5rem;
+  vertical-align: middle;
+`;
+
+export { TaskList, TaskItem, Title, Checkbox, TaskTitle, TaskDate, EditButton, EditIcon, DeleteButton, DeleteIcon };
