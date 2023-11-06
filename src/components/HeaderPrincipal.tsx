@@ -1,5 +1,6 @@
 import { Header, HeaderContent, HeaderTitle, Logo, Navbar, TaskCounter, NewTaskButton } from '../styled-components/Header';
 import { useState, useEffect } from 'react';
+import ModalCreate from './ModalCreate';
 
 interface HeaderPrincipalProps {
   taskCount: number;
@@ -7,6 +8,8 @@ interface HeaderPrincipalProps {
 
 const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ taskCount }) => {
   const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#469AF8');
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (taskCount >= 1 && taskCount <= 3) {
@@ -17,6 +20,18 @@ const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ taskCount }) => {
       setHeaderBackgroundColor('#469AF8');
     }
   }, [taskCount]);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const getSubmit = (data: any) => {
+    console.log(data);
+  }
 
   return (
     <div>
@@ -29,9 +44,14 @@ const HeaderPrincipal: React.FC<HeaderPrincipalProps> = ({ taskCount }) => {
         </HeaderContent>
         <Navbar>
           <TaskCounter $bgcolor={headerBackgroundColor}>Tarefas Pendentes: {taskCount}</TaskCounter>
-          <NewTaskButton>Nova Tarefa</NewTaskButton>
+          <NewTaskButton onClick={openModal}>Nova Tarefa</NewTaskButton>
         </Navbar>
       </Header>
+
+      {isModalOpen && (
+        <ModalCreate isOpen={isModalOpen} onClose={closeModal} title="Criar Nova Tarefa" submit={getSubmit}>
+        </ModalCreate>
+      )}
     </div>
   );
 };
