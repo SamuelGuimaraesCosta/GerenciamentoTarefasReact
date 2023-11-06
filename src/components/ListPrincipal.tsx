@@ -4,12 +4,12 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import Alert from './AlertMessage';
 
-const ListPrincipal = ({ updateTaskCount }: any) => {
-  const [tasks, setTasks]: Array<any> = useState([]);
-
+const ListPrincipal = ({ updateTaskCount, loadAllData, tasks }: any) => {
   const [error, setError] = useState<string | null>(null);
 
   const [success, setSuccess] = useState<string | null>(null);
+
+  const [updatedTasks, setUpdatedTasks] = useState<Array<any>>([]);
 
   const fetchTasksFromServer = async () => {
     try {
@@ -20,23 +20,13 @@ const ListPrincipal = ({ updateTaskCount }: any) => {
     }
   };
 
-  const loadAllData = () => {
-    fetchTasksFromServer().then((data) => {
-      setTasks(data);
-    }).catch((error: any) => {
-      setError(`Erro ao carregar Tarefas: ${error.message}`);
-    });
-    return;
-  }
-
   useEffect(() => {
     fetchTasksFromServer().then((data) => {
-      setTasks(data);
+      setUpdatedTasks(data);
     }).catch((error: any) => {
       setError(`Erro ao carregar Tarefas: ${error.message}`);
     });
-    return;
-  }, []);
+  }, [tasks]);
 
   const formatDateTime = (dateTimeString: string) => {
     const timeZone = 'America/Sao_Paulo';
@@ -45,16 +35,16 @@ const ListPrincipal = ({ updateTaskCount }: any) => {
     const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     const dayOfWeek = daysOfWeek[zonedDate.getDay()];
 
-    const formattedDate = `${dayOfWeek} ${zonedDate.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: timeZone })}`;
+    const formattedDate = `${dayOfWeek}. ${zonedDate.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: timeZone })}`;
 
     return formattedDate;
   };
 
   const handleCheckboxChange = (taskId: number) => {
-    const updatedTasks = tasks.map((task: any) => {
+    tasks = updatedTasks;
+    tasks.map((task: any) => {
       if (task.id === taskId) {
         const updatedTask = { ...task, completed: !task.completed };
-
         const actualDate = new Date();
         const year = actualDate.getFullYear();
         const month = String(actualDate.getMonth() + 1).padStart(2, '0');
@@ -66,16 +56,19 @@ const ListPrincipal = ({ updateTaskCount }: any) => {
 
         axios.put(`http://localhost:3001/tasks/${taskId}`, updatedTask).then(() => {
           setTimeout(() => {
-            loadAllData();
-            updateTaskCount();
+            loadAllData().then((result: any) => {
+              setUpdatedTasks(result);
 
-            if (updatedTask.completed) {
-              setSuccess('Parabéns! Sua tarefa foi concluída com sucesso!');
-            }
+              updateTaskCount();
 
-            setTimeout(() => {
-              setSuccess(null);
-            }, 1000);
+              if (updatedTask.completed) {
+                setSuccess('Parabéns! Sua tarefa foi concluída com sucesso!');
+
+                setTimeout(() => {
+                  setSuccess(null);
+                }, 1000);
+              }
+            });
           }, 100);
         }).catch((error: any) => {
           setError(`Erro ao carregar Tarefas: ${error.message}`);
@@ -86,7 +79,7 @@ const ListPrincipal = ({ updateTaskCount }: any) => {
       return task;
     });
 
-    return updatedTasks;
+    return;
   };
 
   return (
@@ -97,7 +90,7 @@ const ListPrincipal = ({ updateTaskCount }: any) => {
 
       <TaskList>
         <Title>Lista de Tarefas</Title>
-        {tasks.sort((a: any, b: any) => (a.completed === b.completed ? 0 : a.completed ? 1 : -1)).map((task: any) => (
+        {updatedTasks.sort((a: any, b: any) => (a.completed === b.completed ? 0 : a.completed ? 1 : -1)).map((task: any) => (
           <TaskItem key={task.id} $completed={task.completed}>
             <Checkbox type="checkbox" checked={task.completed} onChange={() => handleCheckboxChange(task.id)} />
             <TaskTitle $completed={task.completed}>{task.description}</TaskTitle>

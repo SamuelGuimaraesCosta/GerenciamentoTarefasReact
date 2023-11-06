@@ -18,6 +18,23 @@ function HomePage() {
     }
   };
 
+  const fetchTasksFromServer = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/tasks');
+      return response.data;
+    } catch (error: any) {
+      setError(`Erro ao carregar Tarefas: ${error.message}`);
+    }
+  };
+
+  const getData = () => {
+    fetchTasksFromServer().then((result: any) => {
+      updateTaskCount();
+
+      return result;
+    });
+  }
+
   useEffect(() => {
     updateTaskCount();
   }, []);
@@ -25,11 +42,11 @@ function HomePage() {
   return (
     <div>
       <div>
-        <HeaderPrincipal taskCount={taskCount} />
+        <HeaderPrincipal taskCount={taskCount} loadAllData={getData} />
       </div>
       <div>
         {error && <Alert message={error} $visible={error !== null ? true : false} color="#f44336" />}
-        <ListPrincipal updateTaskCount={updateTaskCount} />
+        <ListPrincipal updateTaskCount={updateTaskCount} loadAllData={fetchTasksFromServer} tasks={getData} />
       </div>
     </div>
   );
